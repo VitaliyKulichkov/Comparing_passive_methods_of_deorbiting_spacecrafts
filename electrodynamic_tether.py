@@ -59,21 +59,23 @@ class Tros:
         self.Kepler_a = (apogee + perigee) / 2
         self.deltat = ((weight_system * R) / (2 * length * pow(self.Kepler_a, 6) * 1 * coskvim * Bm * Bm)) * (pow(perigee, 7) - pow(heigth_atmosphere, 7))
         self.deltatmes = self.deltat * 3.8052 * pow(10, -7)
-        print(f"Время увода системы массой {weight_system} с высоты орбиты {perigee} составляет {self.deltatmes} мес.")
+        print(f"Время увода системы массой {weight_system} с высоты орбиты {perigee} тросовой системой длинной {length} составляет {self.deltatmes} мес.")
 
 def main():
     list_of_weights = [900, 1800]
-    list_of_perigee = [700000, 800000]
-    list_of_apogee = [800000 , 900000]
+    list_of_perigee = [700000, 800000, 900000]
+    list_of_apogee = [800000 , 900000, 1000000]
+    length_of_tether = [5000, 10000, 15000, 20000, 25000]
     zipped_heights = list(zip(list_of_apogee, list_of_perigee))
     #print(zipped_heights)
-    for mass in list_of_weights:
-        for tuple in zipped_heights:
-            tros = Tros()
-            weigth = tros.weight(5000, 0.007, mass)
-            coordinates = tros.coordinates(tuple[0])
-            induction = tros.magnetic_induction(coordinates[0],coordinates[1], 60)
-            tros.deorbit_time(weigth, 5000, induction, tuple[0], tuple[1])
+    for length in length_of_tether:
+        for mass in list_of_weights:
+                for tuple_of_heights in zipped_heights:
+                    tros = Tros()
+                    weigth = tros.weight(length, 0.007, mass)
+                    coordinates = tros.coordinates(tuple_of_heights[0])
+                    induction = tros.magnetic_induction(coordinates[0],coordinates[1], 60)
+                    tros.deorbit_time(weigth, length, induction, tuple_of_heights[0], tuple_of_heights[1])
 
 if __name__ == '__main__':
     main()
