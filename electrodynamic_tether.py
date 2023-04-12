@@ -60,6 +60,69 @@ class Tros:
         self.deltat = ((weight_system * R) / (2 * length * pow(self.Kepler_a, 6) * 1 * coskvim * Bm * Bm)) * (pow(perigee, 7) - pow(heigth_atmosphere, 7))
         self.deltatmes = self.deltat * 3.8052 * pow(10, -7)
         print(f"Время увода системы массой {weight_system} с высоты орбиты {perigee} тросовой системой длинной {length} составляет {self.deltatmes} мес.")
+        return self.deltatmes
+
+
+"""def create_file():
+    file_name = "./test.xlsx"
+    book = openpyxl.Workbook('tether2.xlsx')
+    book.create_sheet(' L-5 000 M-900')
+    book.create_sheet(' L-10 000 M-900')
+    book.create_sheet(' L-15 000 M-900')
+    book.create_sheet(' L-20 000 M-900')
+    book.create_sheet(' L-25 000 M-900')
+    book.create_sheet(' L-5 000 M-1 800')
+    book.create_sheet(' L-10 000 M-1 800')
+    book.create_sheet(' L-15 000 M-1 800')
+    book.create_sheet(' L-20 000 M-1 800')
+    book.create_sheet(' L-25 000 M-1 800')
+    book.save('tether2.xlsx')"""
+
+def write_data_into_excel(lst:list):
+    book = openpyxl.Workbook()
+    book.create_sheet('L-5 000 M-900')
+    book.create_sheet('L-10 000 M-900')
+    book.create_sheet('L-15 000 M-900')
+    book.create_sheet('L-20 000 M-900')
+    book.create_sheet('L-25 000 M-900')
+    book.create_sheet('L-5 000 M-1 800')
+    book.create_sheet('L-10 000 M-1 800')
+    book.create_sheet('L-15 000 M-1 800')
+    book.create_sheet('L-20 000 M-1 800')
+    book.create_sheet('L-25 000 M-1 800')
+    title = ["Высота орбиты, м", "Масса КА, кг", "Масса системы, кг", "Длина троса, м", "Время увода, мес"]
+    book['L-5 000 M-900'].append(title)
+    book['L-10 000 M-900'].append(title)
+    book['L-15 000 M-900'].append(title)
+    book['L-20 000 M-900'].append(title)
+    book['L-25 000 M-900'].append(title)
+    book['L-5 000 M-1 800'].append(title)
+    book['L-10 000 M-1 800'].append(title)
+    book['L-15 000 M-1 800'].append(title)
+    book['L-20 000 M-1 800'].append(title)
+    book['L-25 000 M-1 800'].append(title)
+    for i in lst:
+        if i[1] == 900 and i[3] == 5000: # or i == ["Высота орбиты, м", "Масса КА, кг", "Масса системы, кг", "Длина троса, м", "Время увода, мес"]:
+            book['L-5 000 M-900'].append(i)
+        elif i[1] == 900 and i[3] == 10000:# or i == ["Высота орбиты, м", "Масса КА, кг", "Масса системы, кг", "Длина троса, м", "Время увода, мес"]:
+            book['L-10 000 M-900'].append(i)
+        elif i[1] == 900 and i[3] == 15000:# or i == ["Высота орбиты, м", "Масса КА, кг", "Масса системы, кг", "Длина троса, м", "Время увода, мес"]:
+            book['L-15 000 M-900'].append(i)
+        elif i[1] == 900 and i[3] == 20000:# or i == ["Высота орбиты, м", "Масса КА, кг", "Масса системы, кг", "Длина троса, м", "Время увода, мес"]:
+            book['L-20 000 M-900'].append(i)
+        elif i[1] == 900 and i[3] == 25000:# or i == ["Высота орбиты, м", "Масса КА, кг", "Масса системы, кг", "Длина троса, м", "Время увода, мес"]:
+            book['L-25 000 M-900'].append(i)
+        elif i[1] == 1800 and i[3] == 5000:# or i == ["Высота орбиты, м", "Масса КА, кг", "Масса системы, кг", "Длина троса, м", "Время увода, мес"]:
+            book['L-5 000 M-1 800'].append(i)
+        elif i[1] == 1800 and i[3] == 10000:# or i == ["Высота орбиты, м", "Масса КА, кг", "Масса системы, кг", "Длина троса, м", "Время увода, мес"]:
+            book['L-10 000 M-1 800'].append(i)
+        elif i[1] == 1800 and i[3] == 15000:# or i == ["Высота орбиты, м", "Масса КА, кг", "Масса системы, кг", "Длина троса, м", "Время увода, мес"]:
+            book['L-15 000 M-1 800'].append(i)
+        elif i[1] == 1800 and i[3] == 20000:# or i == ["Высота орбиты, м", "Масса КА, кг", "Масса системы, кг", "Длина троса, м", "Время увода, мес"]:
+            book['L-20 000 M-1 800'].append(i)
+        elif i[1] == 1800 and i[3] == 25000: #or i == ["Высота орбиты, м", "Масса КА, кг", "Масса системы, кг", "Длина троса, м", "Время увода, мес"]:
+            book['L-25 000 M-1 800'].append(i)
+    book.save('tether2.xlsx')
 
 def main():
     list_of_weights = [900, 1800]
@@ -68,6 +131,11 @@ def main():
     length_of_tether = [5000, 10000, 15000, 20000, 25000]
     zipped_heights = list(zip(list_of_apogee, list_of_perigee))
     #print(zipped_heights)
+    #create_file()
+    lst = []
+    rows = [
+        ["Высота орбиты, м", "Масса КА, кг", "Масса системы, кг", "Длина троса, м", "Время увода, мес"],
+    ]
     for length in length_of_tether:
         for mass in list_of_weights:
                 for tuple_of_heights in zipped_heights:
@@ -75,7 +143,11 @@ def main():
                     weigth = tros.weight(length, 0.007, mass)
                     coordinates = tros.coordinates(tuple_of_heights[0])
                     induction = tros.magnetic_induction(coordinates[0],coordinates[1], 60)
-                    tros.deorbit_time(weigth, length, induction, tuple_of_heights[0], tuple_of_heights[1])
+                    time = float(tros.deorbit_time(weigth, length, induction, tuple_of_heights[0], tuple_of_heights[1]))
+                    rows.append([tuple_of_heights[0], int(mass), int(weigth), length, time])
+    print(rows)
+    write_data_into_excel(rows)
 
 if __name__ == '__main__':
     main()
+    #create_file()
