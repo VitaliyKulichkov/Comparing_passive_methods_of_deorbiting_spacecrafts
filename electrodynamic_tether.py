@@ -129,7 +129,7 @@ class Tether:
             var = pd.read_excel("tether2.xlsx", sheet_name=sheet)
             x = list(var['Время увода, мес'])
             y = list(var['Высота орбиты, м'])
-            plt.figure(figsize=(5, 5))
+            plt.figure(figsize=(7, 5))
             # plt.style.use('seaborn')
             plt.scatter(x, y, marker=".", s=100, edgecolors="black", c="yellow")
             plt.title("L = 5000m ")
@@ -165,11 +165,10 @@ class Tether:
         for length in length_of_tether:
             for mass in list_of_weights:
                 for tuple_of_heights in zipped_heights:
-                    tether = Tether()
-                    weigth = tether.weight_of_system(length, 0.007, mass)
-                    coordinates = tether.coordinates_of_spacecraft(tuple_of_heights[0])
-                    induction = tether.magnetic_induction(coordinates[0], coordinates[1], 60)
-                    time = float(tether.deorbiting_time(weigth, length, induction, tuple_of_heights[0], tuple_of_heights[1]))
+                    weigth = self.weight_of_system(length, 0.007, mass)
+                    coordinates = self.coordinates_of_spacecraft(tuple_of_heights[0])
+                    induction = self.magnetic_induction(coordinates[0], coordinates[1], 60)
+                    time = float(self.deorbiting_time(weigth, length, induction, tuple_of_heights[0], tuple_of_heights[1]))
                     results.append([tuple_of_heights[0], int(mass), int(weigth), length, time])
         self.write_data_into_excel(results)
         self.creating_a_diagram()
